@@ -16,6 +16,10 @@
 				color: #444;
 				background: #e6f0f6;
 			}
+			p,
+			pre {
+				margin: 20px 0;
+			}
 			h1 {
 				font-size: 40px;
 			}
@@ -25,8 +29,18 @@
 			h3 {
 				font-size: 20px;
 			}
+			h2 + p,
+			h2 + pre {
+				margin-top: 0;
+			}
 			a {
 				color: inherit;
+			}
+			section:after,
+			section > div:after {
+				content: '';
+				display: block;
+				height: 30px;
 			}
 			code,
 			pre {
@@ -65,10 +79,13 @@
 				border-right: 1px solid #ccc;
 				overflow-x: auto;
 			}
-			.scrolltable table {
+			.scrolltable__table {
 				width: auto;
 				min-width: 100%;
 				border-right: none;
+			}
+			.scrolltable__description {
+				min-width: 300px;
 			}
 			.wrapper {
 				padding: 50px 0;
@@ -135,11 +152,42 @@
 				z-index: 1;
 				margin-top: 15px;
 				padding-bottom: 10px;
+				text-indent: 0;
 			}
 			h3.sticking {
+				text-indent: 36px;
 				font-size: 18px;
 				font-weight: normal;
 			}
+
+			h3.sticker:before,
+			h3.sticker:after {
+				content: '';
+				display: block;
+				position: absolute;
+				border-left: 2px solid #ccc;
+				border-bottom: 2px solid #ccc;
+				opacity: 0;
+				transition: inherit;
+			}
+			h3.sticker:before {
+				left: 30px;
+				top: 5px;
+				width: 10px;
+				height: 10px;
+			}
+			h3.sticker:after {
+				left: 35px;
+				top: 11px;
+				width: 8px;
+				height: 8px;
+				transform: rotate(-135deg);
+			}
+			h3.sticking:before,
+			h3.sticking:after {
+				opacity: 1;
+			}
+
 			.toc {
 				float: right;
 				margin-right: 20px;
@@ -164,49 +212,48 @@
 		<div class="wrapper" id="top">
 			<div class="container">
 
-				<h1>Sticky Event Listener</h1>
-				<p class="intro">A small javascript plugin for adding an event listener for <code>position: sticky;</code> elements,
-					without the need for an <code>onscroll</code> listener.</p>
+				<section>
+					<h1>Sticky Event Listener</h1>
+					<p class="intro">A small javascript plugin for adding an event listener for <code>position: sticky;</code> elements,
+						without the need for an <code>onscroll</code> listener.</p>
 
-				<p>Just checkout the titles on this demo page,
-					their appearance will change when entering or leaving the sticky state.</p>
+					<p>Just checkout the titles on this demo page,
+						their appearance will change when entering or leaving the sticky state.</p>
+				</section>
 
-				<br>
-
-				<div>
+				<section>
 					<h2 class="sticker">Installation
 						<a href="#top" class="toc">Top</a>
 					</h2>
 					<pre>npm i sticky-event-listener</pre>
+				</section>
 
-					<br>
-				</div>
-
-				<div>
-					<h2 class="sticker">Setup
+				<section>
+					<h2 class="sticker">Usage
 						<a href="#top" class="toc">Top</a>
 					</h2>
 					<p>The setup is fairly easy,
 						simply create a new instance of the <code>StickyEventListener</code> class for each sticky element
 						and add an event listener.</p>
 
-<pre>const stickers = document.querySelectorAll('.sticker');
-stickers.forEach(sticker => {
-    new StickyEventListener(sticker);
-    sticker.addEventListener('sticky', event => {
-        console.log( event.detail.stuck );
-    });
-});</pre>
+<pre>import StickyEventListener from 'sticky-event-listener';
+
+document
+    .querySelectorAll('.sticker')
+    .forEach(sticker => {
+        new StickyEventListener(sticker);
+        sticker.addEventListener('sticky', event => {
+            console.log( event.detail.stuck );
+        });
+    });</pre>
 
 					<p>For most use-cases,
 						this would be sufficient.
 						For more options and a detailed information,
 						checkout <a href="#docs">the documentation</a>.</p>
+				</section>
 
-					<br>
-				</div>
-
-				<div id="docs">
+				<section id="docs">
 					<h2 class="sticker sticker--has-h3-stickers">Documentation
 						<a href="#top" class="toc">Top</a>
 					</h2>
@@ -219,7 +266,6 @@ stickers.forEach(sticker => {
     console.log( event.detail.stuck );
 });</pre>
 
-						<br>
 					</div>
 
 					<div>
@@ -232,13 +278,13 @@ stickers.forEach(sticker => {
 });</pre>
 
 						<div class="scrolltable">
-							<table>
+							<table class="scrolltable__table">
 								<thead>
 									<tr>
 										<th>Name</th>
 										<th>Type</th>
 										<th>Default</th>
-										<th>Description</th>
+										<th class="scrolltable__description">Description</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -258,8 +304,6 @@ stickers.forEach(sticker => {
 							</table>
 						</div>
 
-						<br>
-						<br>
 					</div>
 
 					<div>
@@ -268,12 +312,12 @@ stickers.forEach(sticker => {
 							you might need to invoke these methods for the plugin to function as intended.</p>
 
 						<div class="scrolltable">
-							<table>
+							<table class="scrolltable__table">
 								<thead>
 									<tr>
 										<th>Name</th>
 										<th>Arguments</th>
-										<th>Description</th>
+										<th class="scrolltable__description">Description</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -311,10 +355,15 @@ window.addEventListener('resize', event => {
     instance.setStickerPosition();
 });</pre>
 
-						<br>
 					</div>
+				</section>
 
-				</div>
+				<section>
+					<h2 class="sticker">License
+						<a href="#top" class="toc">Top</a>
+					</h2>
+					<p>The Sticky Event Listener plugin is licensed under the <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC-BY-4.0 license</a>.
+				</section>
 			</div>
 		</div>
 
