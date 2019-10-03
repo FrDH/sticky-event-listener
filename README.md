@@ -3,6 +3,9 @@ Sticky Event Listener
 
 A small javascript plugin for adding an event listener for sticky elements, without the need for an onscroll listener.
 
+### Demo
+Have a look at [this demo](https://frebsite.nl/sticky).
+
 ### Licence
 The Sticky Event Listener plugin is licensed under the [CC-BY-4.0 license](http://creativecommons.org/licenses/by/4.0/).
 
