@@ -1,0 +1,32 @@
+{
+	"name": "sticky-event-listener",
+	"version": "0.0.1",
+	"main": "dist/sticky-event-listener.js",
+	"module": "dist/sticky-event-listener.esm.js",
+	"author": "Fred Heusschen <info@frebsite.nl>",
+	"license": "CC-BY-4.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/FrDH/sticky-event-listener.git"
+	},
+	"description": "Add an event listener for sticky elements, without the need for an onscroll listener.",
+	"keywords": [
+		"stick",
+		"sticky",
+		"stuck",
+		"unstuck",
+		"event",
+		"listener",
+		"javascript"
+	],
+	"scripts": {
+		"build": "gulp default"
+	},
+	"devDependencies": {
+		"gulp": "^4.0.2",
+		"gulp-rename": "^1.4.0",
+		"gulp-typescript": "^5.0.1",
+		"typescript": "^3.4.5",
+		"webpack-stream": "^5.2.1"
+	}
+}

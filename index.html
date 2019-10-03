@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Sticky Event Listener</title>
+		<style>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				font-size: 18px;
+				font-family: Arial, sans-serif;
+				line-height: 30px;
+				color: #444;
+				background: #e6f0f6;
+			}
+			h1 {
+				font-size: 40px;
+			}
+			h2 {
+				font-size: 30px;
+			}
+			h3 {
+				font-size: 20px;
+			}
+			a {
+				color: inherit;
+			}
+			code,
+			pre {
+				color: #888;
+				background: #eee;
+			}
+			code {
+				padding: 5px 10px;
+			}
+			pre {
+				padding: 20px;
+				overflow-x: auto;
+			}
+			table {
+				width: 100%;
+				border: 1px solid #ccc;
+				border-collapse: collapse;
+			}
+			th, td {
+				vertical-align: top;
+				text-align: left;
+			}
+			thead {
+				background: #f3f3f3;
+			}
+			th {
+				padding: 10px 20px;
+			}
+			td {
+				padding: 20px;
+				border-top: 1px solid #ccc;
+			}
+			.scrolltable {
+				width: 100%;
+				box-sizing: border-box;
+				border-right: 1px solid #ccc;
+				overflow-x: auto;
+			}
+			.scrolltable table {
+				width: auto;
+				min-width: 100%;
+				border-right: none;
+			}
+			.wrapper {
+				padding: 50px 0;
+			}
+			@media (min-width: 1000px) {
+				.wrapper {
+					padding: 100px 0;
+				}
+			}
+			.container {
+				width: 85%;
+				min-width: 300px;
+				max-width: 1000px;
+				margin: auto;
+				padding: 50px 20px;
+
+				box-sizing: border-box;
+				background: #fff;
+				box-shadow: 0 0 50px rgba(0,0,0,0.1);
+			}
+			@media (min-width: 500px) {
+				.container {
+					padding-left: 50px;
+					padding-right: 50px;
+				}
+			}
+			@media (min-width: 1000px) {
+				.container {
+					padding-left: 100px;
+					padding-right: 100px;
+				}
+			}
+			.intro {
+				font-size: 22px;
+			}
+			.sticker {
+				position: sticky;
+				padding-left: 20px;
+				padding-right: 20px;
+				margin: 0 -20px;
+				background: #fff;
+				border-bottom: 5px solid transparent;
+				transition: all 0.3s ease;
+			}
+			.sticking {
+				border-bottom-color:#ccc;
+			}
+			h2.sticker {
+				top: 0;
+				z-index: 2;
+				padding-top: 30px;
+				padding-bottom: 30px;
+			}
+			h2.sticking {
+				font-size: 22px;
+			}
+			h2.sticker--has-h3-stickers {
+				padding-bottom: 10px;
+				margin-bottom: 20px;
+				border-bottom: none;
+			}
+			h3.sticker {
+				top: 65px;
+				z-index: 1;
+				margin-top: 15px;
+				padding-bottom: 10px;
+			}
+			h3.sticking {
+				font-size: 18px;
+				font-weight: normal;
+			}
+			.toc {
+				float: right;
+				margin-right: 20px;
+				font-size: 14px;
+				font-weight: 400;
+				color: #888;
+				text-decoration: none;
+				opacity: 0;
+				transition: all 0.5s ease;
+			}
+			.toc:hover {
+				text-decoration: underline;
+			}
+			.sticking .toc {
+				margin-right: 0;
+				opacity: 1;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div class="wrapper" id="top">
+			<div class="container">
+
+				<h1>Sticky Event Listener</h1>
+				<p class="intro">A small javascript plugin for adding an event listener for <code>position: sticky;</code> elements,
+					without the need for an <code>onscroll</code> listener.</p>
+
+				<p>Just checkout the titles on this demo page,
+					their appearance will change when entering or leaving the sticky state.</p>
+
+				<br>
+
+				<div>
+					<h2 class="sticker">Installation
+						<a href="#top" class="toc">Top</a>
+					</h2>
+					<pre>npm i sticky-event-listener</pre>
+
+					<br>
+				</div>
+
+				<div>
+					<h2 class="sticker">Setup
+						<a href="#top" class="toc">Top</a>
+					</h2>
+					<p>The setup is fairly easy,
+						simply create a new instance of the <code>StickyEventListener</code> class for each sticky element
+						and add an event listener.</p>
+
+<pre>const stickers = document.querySelectorAll('.sticker');
+stickers.forEach(sticker => {
+    new StickyEventListener(sticker);
+    sticker.addEventListener('sticky', event => {
+        console.log( event.detail.stuck );
+    });
+});</pre>
+
+					<p>For most use-cases,
+						this would be sufficient.
+						For more options and a detailed information,
+						checkout <a href="#docs">the documentation</a>.</p>
+
+					<br>
+				</div>
+
+				<div id="docs">
+					<h2 class="sticker sticker--has-h3-stickers">Documentation
+						<a href="#top" class="toc">Top</a>
+					</h2>
+
+					<div>
+						<h3 class="sticker">Events</h3>
+						<p>The <code>StickyEventListener</code> dispatches an event called <code>sticky</code> when the element enters or leaves the sticky state.</p>
+
+<pre>sticker.addEventListener('sticky', event => {
+    console.log( event.detail.stuck );
+});</pre>
+
+						<br>
+					</div>
+
+					<div>
+						<h3 class="sticker">Options</h3>
+						<p>Pass options to the class to alter its behavior.</p>
+
+<pre>new StickyEventListener(sticker, {
+    monitorTop: true,
+    monitorBottom: false
+});</pre>
+
+						<div class="scrolltable">
+							<table>
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Default</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>monitorTop</td>
+										<td>Boolean</td>
+										<td><code>true</code></td>
+										<td>Whether or not to monitor the element to enter the sticky state on the top.</td>
+									</tr>
+									<tr>
+										<td>monitorBottom</td>
+										<td>Boolean</td>
+										<td><code>false</code></td>
+										<td>Whether or not to monitor the element to leave the sticky state from the bottom.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<br>
+						<br>
+					</div>
+
+					<div>
+						<h3 class="sticker">Methods</h3>
+						<p>In some rare use-cases,
+							you might need to invoke these methods for the plugin to function as intended.</p>
+
+						<div class="scrolltable">
+							<table>
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Arguments</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>setStickerTop</td>
+										<td><em>none</em></td>
+										<td>Remeasures the <code>top</code> property of the sticky element and updates the position for the sentinels,
+											Should be called when the CSS <code>top</code> property for the sticky element changes,
+											for example when entering or leaving a media query.</td>
+									</tr>
+									<tr>
+										<td>setStickerPosition</td>
+										<td><em>none</em></td>
+										<td>Remeasures the position of the sticky element and updates the height for the sentinels,
+											Should be called when the position of the sticky element (relative to the top of the document) changes,
+											for example when resizing the window.</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<p>For example
+							<small>(but again, only use these methods if the plugin otherwise does not function as intended)</small>:</p>
+
+<pre>const instance = new StickyEventListener(sticker);
+
+//  Remeasure the "top" property.
+const mql = window.matchMedia('(max-width: 600px)');
+mql.addListener(event => {
+    instance.setStickerTop();
+});
+
+//  Remeasure the position.
+window.addEventListener('resize', event => {
+    instance.setStickerPosition();
+});</pre>
+
+						<br>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+		<script src="dist/sticky-event-listener.js"></script>
+		<script>
+			var stickers = document.querySelectorAll('.sticker');
+
+			stickers.forEach(function(sticker) {
+				new StickyEventListener(sticker);
+				sticker.addEventListener('sticky', function(e) {
+					e.target.classList[ e.detail.stuck ? 'add' : 'remove']('sticking');
+				});
+			});
+
+			document.addEventListener('click', function(event) {
+				var anchor = event.target.closest('a[href^="#"]');
+				if (anchor) {
+					var target = document.querySelector(anchor.getAttribute('href'));
+					if (target) {
+						event.preventDefault();
+						target.scrollIntoView({
+							behavior: 'smooth'
+						});
+					}
+				}
+			});
+		</script>
+
+	</body>
+</html>
