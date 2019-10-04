@@ -1,6 +1,6 @@
 {
 	"name": "sticky-event-listener",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"main": "dist/sticky-event-listener.js",
 	"module": "dist/sticky-event-listener.esm.js",
 	"author": "Fred Heusschen <info@frebsite.nl>",
